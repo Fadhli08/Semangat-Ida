@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffe8ef">
+<title>For Ida💕 💌</title>
+<style>
+:root{--pink:#f7b8cb;--deep:#b94f78;--cream:#fff8f5;--ink:#6d3c50}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;overflow:hidden;font-family:Georgia,'Times New Roman',serif;color:var(--ink);background:radial-gradient(circle at 20% 15%,#fff 0 2px,transparent 3px),linear-gradient(145deg,#fff2f5,#ffe0e9 55%,#f9d9e7);display:grid;place-items:center;padding:20px}
+.scene{width:min(100%,430px);min-height:min(760px,94svh);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;text-align:center}
+h1{font-size:clamp(1.65rem,7vw,2.35rem);line-height:1.15;margin:0 0 10px;color:#a94069}
+.subtitle{font:14px/1.5 system-ui,sans-serif;margin:0 0 34px;color:#9a6075}
+.envelope-wrap{width:min(84vw,340px);height:230px;position:relative;perspective:900px;cursor:pointer;filter:drop-shadow(0 18px 18px #b94f7822);-webkit-tap-highlight-color:transparent}
+.envelope{position:absolute;inset:35px 0 0;height:190px;background:#f4a9c0;border-radius:5px;overflow:visible}
+.back{position:absolute;inset:0;background:#f6c4d3;clip-path:polygon(0 0,50% 53%,100% 0,100% 100%,0 100%);border-radius:5px}
+.letter{position:absolute;left:7%;width:86%;height:155px;bottom:8px;background:#fffdfb;border-radius:5px;box-shadow:0 3px 10px #9c496622;padding:17px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 1s cubic-bezier(.2,.75,.25,1),bottom 1s;z-index:2}
+.letter strong{font-size:20px;color:#b94f78;margin-bottom:8px}
+.letter p{font-size:14px;line-height:1.45;margin:0}
+.front{position:absolute;inset:0;background:#f7b5c9;clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);z-index:4;border-radius:5px}
+.flap{position:absolute;left:0;top:0;width:100%;height:115px;background:#e98fac;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s ease;z-index:5;backface-visibility:hidden}
+.seal{position:absolute;left:50%;top:95px;transform:translate(-50%,-50%);z-index:6;width:42px;height:42px;border-radius:50%;background:#bd4e78;color:white;display:grid;place-items:center;font-size:21px;box-shadow:0 3px 8px #9b3e632c;transition:opacity .3s}
+.hint{font:13px system-ui,sans-serif;color:#9e5c76;margin-top:20px;animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.open .flap{transform:rotateX(180deg);z-index:1}
+.open .seal{opacity:0}
+.open .letter{transform:translateY(-115px);transition-delay:.2s}
+.butterfly{position:fixed;left:var(--x);top:var(--y);font-size:var(--size);z-index:10;pointer-events:none;opacity:0;animation:fly var(--dur) ease-out forwards;filter:drop-shadow(0 3px 4px #a94c7522)}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) rotate(0) scale(.45)}12%{opacity:1}55%{opacity:1;transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(1)}100%{opacity:0;transform:translate(calc(var(--dx)*1.4),calc(var(--dy) - 170px)) rotate(calc(var(--rot)*1.5)) scale(.8)}}
+.note{margin-top:26px;max-width:330px;font-size:14px;line-height:1.6;opacity:0;transform:translateY(8px);transition:all .6s .6s}
+.open~.note{opacity:1;transform:translateY(0)}
+.reset{display:none;margin-top:18px;border:1px solid #d98aa6;border-radius:999px;padding:10px 18px;background:#fff9fb;color:#a94069;font:13px system-ui,sans-serif}
+.open~.reset{display:block}
+.footer{position:absolute;bottom:4px;font:11px system-ui,sans-serif;color:#b77c91}
+@media(max-height:620px){.scene{min-height:95svh}.subtitle{margin-bottom:16px}.envelope-wrap{transform:scale(.82);margin:-15px 0}.note{margin-top:8px}.footer{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main class="scene">
+  <h1>Hi Ida 💗</h1>
+  <p class="subtitle">kmk just buat simple jak sebab masa tak mencukupi…</p>
+  <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Buka sampul surat">
+    <div class="envelope">
+      <div class="back"></div>
+      <div class="letter">
+        <strong>Hai, Ida 🌷</strong>
+        <p>Untuk Ida, Tetap semangat, jangan stress-stress, mun burn out carila ketenangan...Remember mek always support dari jauh 💕</p>
+      </div>
+      <div class="front"></div>
+      <div class="flap"></div>
+      <div class="seal">♥</div>
+    </div>
+  </div>
+  <div class="hint" id="hint">♡ Tekan sampul untuk buka ♡</div>
+  <p class="note" id="note"> 🦋</p>
+  <button class="reset" id="reset">Baca semula 💌</button>
+  <div class="footer">Dibuat ikhlas daripada Am😉 ✨</div>
+</main>
+<script>
+const envelope=document.getElementById('envelope');
+const hint=document.getElementById('hint');
+const reset=document.getElementById('reset');
+let opened=false;
+function butterflies(){
+  const emojis=['🦋','🦋','🦋','💗','🦋','✨','🦋','🌸','🦋','🦋','💕','🦋'];
+  for(let i=0;i<22;i++){
+    const b=document.createElement('span'); b.className='butterfly';
+    b.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    b.style.setProperty('--x',(15+Math.random()*70)+'vw');
+    b.style.setProperty('--y',(38+Math.random()*42)+'vh');
+    b.style.setProperty('--size',(18+Math.random()*22)+'px');
+    b.style.setProperty('--dx',(-90+Math.random()*180)+'px');
+    b.style.setProperty('--dy',(-80-Math.random()*170)+'px');
+    b.style.setProperty('--rot',(-50+Math.random()*100)+'deg');
+    b.style.setProperty('--dur',(2.4+Math.random()*2.4)+'s');
+    document.body.appendChild(b); setTimeout(()=>b.remove(),5000);
+  }
+}
+function openLetter(){
+  if(opened)return; opened=true; envelope.classList.add('open');
+  hint.textContent='Surat ini khas untuk awak 💌'; butterflies();
+}
+function closeLetter(){opened=false;envelope.classList.remove('open');hint.textContent='♡ Tekan sampul untuk buka ♡';}
+envelope.addEventListener('click',openLetter);
+envelope.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLetter();}});
+reset.addEventListener('click',closeLetter);
+</script>
+</body>
+</html>
